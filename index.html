@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Idul Fitri 1447 H - MGMP Informatika Kab. Kediri</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel:wght@400;700&family=Poppins:wght@300;400;600&family=Amiri:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --gold: #FFD700;
+            --gold-dark: #B8860B;
+            --cyan: #00FFFF;
+            --purple-deep: #240b36;
+            --blue-night: #0f0c29;
+            --text-light: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: var(--text-light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* === AUDIO CONTROL BUTTON === */
+        .audio-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            background: linear-gradient(45deg, var(--gold), #ff9f43);
+            color: #000;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+            transition: transform 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .audio-btn:hover { transform: scale(1.1) rotate(15deg); }
+        .audio-btn.playing { animation: pulse 1.5s infinite; }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 215, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+        }
+
+        /* === BACKGROUND EFFECTS === */
+        .stars-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+        .star { position: absolute; background: white; border-radius: 50%; opacity: 0; animation: twinkle 3s infinite ease-in-out; }
+        @keyframes twinkle { 0%, 100% { opacity: 0.2; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); box-shadow: 0 0 10px #fff; } }
+        
+        .moon-bg {
+            position: fixed; top: 5%; right: -50px;
+            width: 300px; height: 300px; border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #fff9c4, #ffd700);
+            opacity: 0.1; z-index: 0;
+            box-shadow: 0 0 100px rgba(255, 215, 0, 0.2);
+        }
+
+        /* === MAIN CARD === */
+        .main-container {
+            position: relative;
+            z-index: 10;
+            padding: 50px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .card {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 30px;
+            padding: 50px 30px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            animation: floatCard 6s infinite ease-in-out;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Ketupat Decor in Card */
+        .ketupat { position: absolute; opacity: 0.3; animation: spin 20s linear infinite; z-index: -1; }
+        .ketupat-1 { top: -20px; left: -20px; width: 80px; }
+        .ketupat-2 { bottom: -20px; right: -20px; width: 100px; animation-direction: reverse; }
+
+        @keyframes floatCard { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* === TYPOGRAPHY === */
+        .header-text { font-family: 'Cinzel', serif; font-size: 1rem; letter-spacing: 4px; color: var(--cyan); text-transform: uppercase; margin-bottom: 10px; }
+        .title-main { font-family: 'Great Vibes', cursive; font-size: 5rem; color: var(--gold); text-shadow: 0 0 20px rgba(255, 215, 0, 0.6); line-height: 1; }
+        .year { font-family: 'Cinzel', serif; font-size: 2rem; color: #fff; border-bottom: 1px solid var(--gold); display: inline-block; padding-bottom: 10px; margin-bottom: 20px; }
+        
+        .message-box { background: rgba(0, 0, 0, 0.2); padding: 20px; border-radius: 15px; margin: 20px 0; }
+        .arabic-quote { font-family: 'Amiri', serif; font-size: 1.5rem; color: var(--gold); margin-bottom: 10px; }
+        .main-message { font-size: 0.95rem; line-height: 1.8; color: #eee; font-weight: 300; }
+
+        .sender { margin-top: 20px; }
+        .sender-logo { font-size: 1.5rem; color: var(--gold); }
+        .sender h3 { font-size: 1.2rem; color: #fff; }
+
+        /* === GALLERY SECTION === */
+        .gallery-section {
+            width: 100%;
+            margin-top: 50px;
+            text-align: center;
+        }
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: var(--gold);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        .section-title::before, .section-title::after {
+            content: '';
+            width: 50px; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold));
+        }
+        .section-title::after { background: linear-gradient(90deg, var(--gold), transparent); }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            padding: 10px;
+        }
+
+        .gallery-item {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            z-index: 5;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        .gallery-item:hover img { transform: scale(1.1); }
+
+        /* === LIGHTBOX (POPUP) === */
+        .lightbox {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 9998;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .lightbox img { max-width: 90%; max-height: 90%; border-radius: 10px; border: 5px solid var(--gold); box-shadow: 0 0 50px rgba(255,215,0,0.3); }
+        .lightbox-close { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; cursor: pointer; }
+
+        /* === FOOTER MOSQUE === */
+        .mosque-bg {
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 150px;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Mosque_silhouette.svg/1280px-Mosque_silhouette.svg.png') center bottom / cover no-repeat;
+            opacity: 0.15; z-index: 1; pointer-events: none;
+        }
+
+        @media (max-width: 600px) {
+            .title-main { font-size: 3.5rem; }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Audio Element -->
+    <audio id="bgMusic" loop>
+        <!-- Ganti src dengan file musik Anda, contoh: "music.mp3" -->
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Music Button -->
+    <button class="audio-btn" id="audioBtn" onclick="toggleAudio()">
+        <i class="fas fa-music"></i>
+    </button>
+
+    <!-- Lightbox Container -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightbox-img" src="" alt="Preview">
+    </div>
+
+    <!-- Stars Background -->
+    <div class="stars-container" id="stars"></div>
+    <div class="moon-bg"></div>
+    <div class="mosque-bg"></div>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        
+        <!-- Kartu Ucapan -->
+        <div class="card">
+            <!-- Ketupat SVG -->
+            <svg class="ketupat ketupat-1" viewBox="0 0 100 100"><path d="M50 0 L100 50 L50 100 L0 50 Z" fill="#27ae60"/></svg>
+            <svg class="ketupat ketupat-2" viewBox="0 0 100 100"><path d="M50 0 L100 50 L50 100 L0 50 Z" fill="#2ecc71"/></svg>
+
+            <div class="header-text">Selamat Hari Raya</div>
+            <h1 class="title-main">Idul Fitri</h1>
+            <div class="year">1447 H</div>
+
+            <div class="message-box">
+                <div class="arabic-quote">تقبل الله منا ومنكم</div>
+                <p class="main-message">
+                    <strong>Minal Aidin wal Faizin,</strong> mohon maaf lahir dan batin. Semoga cahaya Idul Fitri menerangi kehidupan kita dengan penuh keberkahan dan kedamaian.
+                </p>
+            </div>
+
+            <div class="sender">
+                <i class="fas fa-mosque sender-logo"></i>
+                <p>Keluarga Besar</p>
+                <h3>MGMP INFORMATIKA<br>KAB. KEDIRI</h3>
+            </div>
+        </div>
+
+        <!-- Galeri Foto -->
+        <div class="gallery-section">
+            <div class="section-title">Momen Kebersamaan</div>
+            <div class="gallery-grid">
+                <!-- Gambar 1 -->
+                <div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1591814468924-caf88d1232e1?w=800')">
+                    <img src="https://images.unsplash.com/photo-1591814468924-caf88d1232e1?w=400" alt="Gallery 1">
+                </div>
+                <!-- Gambar 2 -->
+                <div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1591981595332-13eb981ae4dc?w=800')">
+                    <a href="https://ibb.co.com/20Nmsht9"><img src="https://i.ibb.co.com/FkVN03wr/foto4.jpg" alt="foto4" border="0"></a>
+                </div>
+                <!-- Gambar 3 -->
+                <div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1519817650390-64a93db51149?w=800')">
+                    <img src="https://images.unsplash.com/photo-1519817650390-64a93db51149?w=400" alt="Gallery 3">
+                </div>
+                <!-- Gambar 4 -->
+                <div class="gallery-item" onclick="openLightbox('https://images.unsplash.com/photo-1609599006353-e629aaabfeae?w=800')">
+                    <img src="https://images.unsplash.com/photo-1609599006353-e629aaabfeae?w=400" alt="Gallery 4">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // === 1. Generator Bintang ===
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 50; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            star.style.top = Math.random() * 100 + '%';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.width = Math.random() * 3 + 'px';
+            star.style.height = star.style.width;
+            star.style.animationDelay = Math.random() * 3 + 's';
+            starsContainer.appendChild(star);
+        }
+
+        // === 2. Audio Control ===
+        const audio = document.getElementById('bgMusic');
+        const audioBtn = document.getElementById('audioBtn');
+        let isPlaying = false;
+
+        function toggleAudio() {
+            if (isPlaying) {
+                audio.pause();
+                audioBtn.innerHTML = '<i class="fas fa-music"></i>';
+                audioBtn.classList.remove('playing');
+            } else {
+                audio.play().catch(e => console.log("Autoplay blocked"));
+                audioBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                audioBtn.classList.add('playing');
+            }
+            isPlaying = !isPlaying;
+        }
+
+        // === 3. Lightbox Gallery ===
+        function openLightbox(src) {
+            const lightbox = document.getElementById('lightbox');
+            const img = document.getElementById('lightbox-img');
+            img.src = src;
+            lightbox.style.display = 'flex';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
